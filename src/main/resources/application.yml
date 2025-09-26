@@ -1,0 +1,15 @@
+spring:
+  profiles.active: @profiles.active@
+  application:
+    name: test2
+
+
+logging.config: classpath:log/logback_dev.xml
+
+
+--- #生产环境配置
+
+spring:
+  config.activate.on-profile: prod
+logging.config: classpath:log/logback_prod.xml
+

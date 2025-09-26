@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 全局基础配置 为全局的日志配置文件提供 appId 和 LOG_PATH 两个属性-->
+<!-- 输出控制台 提供 CONSOLE [同步] 这个 appender-->
+<!-- 输出日志文件 提供 FILE_INFO [同步] / FILE_ERROR [同步] / ASYNC_INFO [异步] / ASYNC_ERROR [异步] 四个 appender-->
+<!-- 同步 appender 和 异步 appender 不要混用,否则可能造成异步日志无法正常输出-->
+<!-- TRACE < DEBUG < INFO < WARN < ERROR < FATAL-->
+<included>
+    <property name="LOG_PATH" value="/data/logs/${appId}"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- CDATA 声明字符不解析，防止msg导致的解析错误 -->
+        <encoder>
+            <pattern>
+                <![CDATA[%highlight(%d{MM/dd HH:mm:ss} %le) %boldYellow([%.15thread]) %boldGreen(%X{traceId:-}) %lo{5} - %msg %ex\n]]>
+            </pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/info.log</file>
+        <!-- 日志格式 -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "time":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "appId": "${appId}",
+                        "thread": "%thread",
+                        "logName": "%logger",
+                        "traceId": "%X{traceId:-}",
+                        "msg": "%msg",
+                        "stackTrace": "%ex"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <!-- 设置滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--设置日志命名模式-->
+            <fileNamePattern>${LOG_PATH}/info.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <!--最多保留多少天log-->
+            <maxHistory>2</maxHistory>
+            <maxFileSize>1GB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <!-- info 日志里面 只输出 info 以及以下级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>NEUTRAL</onMismatch>
+        </filter>
+        <!-- info 文件 允许输出 debug 级别的日志, app端自行通过 level 来限制 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/error.log</file>
+        <!-- 日志格式 -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "time":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "appId": "${appId}",
+                        "thread": "%thread",
+                        "logName": "%logger",
+                        "traceId": "%X{traceId:-}",
+                        "msg": "%msg",
+                        "stackTrace": "%ex"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <!-- 设置滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--设置日志命名模式-->
+            <fileNamePattern>${LOG_PATH}/error.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <!--最多保留多少天log-->
+            <maxHistory>2</maxHistory>
+            <maxFileSize>1GB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <!-- error 日志里面 只输出 warn 以及以上级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <!-- 异步记录日志 -->
+    <appender name="ASYNC_INFO" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="FILE_INFO"/>
+    </appender>
+    <appender name="ASYNC_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="FILE_ERROR"/>
+    </appender>
+</included>
+
