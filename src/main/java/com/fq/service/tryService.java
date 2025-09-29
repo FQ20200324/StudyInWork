@@ -1,7 +1,6 @@
 package com.fq.service;
 
 
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class tryService {
     String host   = "blog.didispace.com";
     String result = MessageFormat.format("hello {0}, your blog is {1}", name, host);
 
-    @PostConstruct
+
     public void tt() {
         log.info("start");
 

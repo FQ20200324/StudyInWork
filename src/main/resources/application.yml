@@ -1,7 +1,10 @@
+server:
+  port: 9527
+
 spring:
   profiles.active: @profiles.active@
   application:
-    name: test2
+    name: test1
 
 
 logging.config: classpath:log/logback_dev.xml
