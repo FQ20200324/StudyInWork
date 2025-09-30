@@ -16,19 +16,14 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class tryService {
 
-//    String name = "DD";
-//    String host = "blog.didispace.com";
-//    String template = "hello %s, your blog is %s";
-//    String result = template.formatted(name,host);
-
-
-    String name   = "DD";
-    String host   = "blog.didispace.com";
-    String result = MessageFormat.format("hello {0}, your blog is {1}", name, host);
-
 
     public void tt() {
         log.info("start");
+
+        String name   = "DD";
+        String host   = "blog.didispace.com";
+        String result = MessageFormat.format("hello {0}, your blog is {1}", name, host);
+        System.out.println(result);
 
         Map<String, String> map = new HashMap<>();
         map.put("kkk", "11");
