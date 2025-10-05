@@ -6,6 +6,16 @@ spring:
   application:
     name: test1
 
+##  Spring Boot Actuator
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: ''
+#      path-mapping:
+#        health: healthcheck
+#      cors:
+#        allowed-origins: 'http://127.0.0.1:9527'
 
 logging.config: classpath:log/logback_dev.xml
 
