@@ -5,6 +5,14 @@ spring:
   profiles.active: @profiles.active@
   application:
     name: test1
+  main:
+    web-application-type: none
+    banner-mode: off
+  ai:
+    mcp:
+      server:
+        name: mcp-server
+        version: 1.0.0
 
 
 logging.config: classpath:log/logback_dev.xml
