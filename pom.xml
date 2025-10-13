@@ -127,7 +127,7 @@
         <finalName>test1</finalName>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>mvc_java/main/resources</directory>
                 <filtering>true</filtering> <!-- 因为没有继承springboot父项目,所以需要添加这个配置让资源文件解析变量 -->
             </resource>
         </resources>
