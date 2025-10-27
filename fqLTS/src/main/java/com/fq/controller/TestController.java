@@ -3,8 +3,10 @@ package com.fq.controller;
 import com.fq.model.request.HelloReq;
 import com.fq.model.response.HelloRsp;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.Random;
@@ -13,6 +15,8 @@ import java.util.Random;
 @RequestMapping("/test")
 @Slf4j
 public class TestController {
+    @Autowired
+    RestTemplate restTemplate;
 
     @PostMapping("/Hello")
     public HelloRsp Hello(@RequestBody HelloReq request) {
@@ -60,6 +64,14 @@ public class TestController {
             }
         }).start();
         return emitter;
+    }
+
+
+    //调用外部order接口
+    @GetMapping("/orderTest")
+    public String testOrder(){
+        String forObject = restTemplate.getForObject("http://order/test/Test", String.class);
+        return STR."拿到order: \{forObject}";
     }
 
 }

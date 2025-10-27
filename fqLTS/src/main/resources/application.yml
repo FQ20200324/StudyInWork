@@ -6,13 +6,13 @@ spring:
   application:
     name: "fqLTS_${spring.profiles.active:test}"
   cloud:
-    service-registry.auto-registration.enabled: false
+#    service-registry.auto-registration.enabled: false
     nacos:
-      server-addr: localhost:8848
-      config.file-extension: yml
+      config:
+        server-addr: localhost:8848
+        namespace: ${spring.profiles.active}
   config.import:
     - nacos:fqLTS.yml
-
 
 ##  Spring Boot Actuator
 management:
@@ -27,7 +27,6 @@ management:
   endpoint:
     shutdown:
       access: unrestricted
-
 
 
 logging.config: classpath:log/logback_dev.xml
