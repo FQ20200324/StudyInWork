@@ -2,9 +2,17 @@ server:
   port: 9527
 
 spring:
-  profiles.active: @profiles.active@
+  profiles.active: test
   application:
-    name: test1
+    name: "fqLTS_${spring.profiles.active:test}"
+  cloud:
+    service-registry.auto-registration.enabled: false
+    nacos:
+      server-addr: localhost:8848
+      config.file-extension: yml
+  config.import:
+    - nacos:fqLTS.yml
+
 
 ##  Spring Boot Actuator
 management:

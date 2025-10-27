@@ -5,8 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.deepleaper</groupId>
-    <artifactId>test1</artifactId>
+    <artifactId>StudyInWork</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>order-demo</module>
+        <module>fqLTS</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -16,29 +21,14 @@
         <spring-boot.version>3.4.3</spring-boot.version>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
+        <logstash.version>7.4</logstash.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.5.3</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.4</version>
         </dependency>
 
         <dependency>
@@ -46,18 +36,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-
 
     </dependencies>
 
@@ -83,6 +61,11 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.version}</version>
             </dependency>
 
 
@@ -117,13 +100,7 @@
     </profiles>
 
     <build>
-        <finalName>test1</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering> <!-- 因为没有继承springboot父项目,所以需要添加这个配置让资源文件解析变量 -->
-            </resource>
-        </resources>
+        <finalName>StudyInWork</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -144,13 +121,6 @@
                         </exclude>
                     </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
