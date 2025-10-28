@@ -6,7 +6,7 @@ spring:
   application:
     name: "fqLTS_${spring.profiles.active:test}"
   cloud:
-#    service-registry.auto-registration.enabled: false
+    service-registry.auto-registration.enabled: false
     nacos:
       config:
         server-addr: localhost:8848

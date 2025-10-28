@@ -4,6 +4,7 @@ import com.fq.model.request.HelloReq;
 import com.fq.model.response.HelloRsp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +18,12 @@ import java.util.Random;
 public class TestController {
     @Autowired
     RestTemplate restTemplate;
+
+    @Value("${flag:0}")
+    private Integer flag;
+
+    @Value("${test.key:a}")
+    private String aaa;
 
     @PostMapping("/Hello")
     public HelloRsp Hello(@RequestBody HelloReq request) {
@@ -33,7 +40,7 @@ public class TestController {
     public HelloRsp TestH() {
         HelloRsp helloRsp = new HelloRsp();
         log.info("should show traceId");
-        helloRsp.setPrt("Hello World!");
+        helloRsp.setPrt(STR."Hello World!\{flag} key=\{aaa}");
         return helloRsp;
 
     }
@@ -71,7 +78,7 @@ public class TestController {
     @GetMapping("/orderTest")
     public String testOrder(){
         String forObject = restTemplate.getForObject("http://order/test/Test", String.class);
-        return STR."拿到order: \{forObject}";
+        return STR."拿到order: \{forObject} flag=\{flag} key=\{aaa}";
     }
 
 }
