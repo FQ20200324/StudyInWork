@@ -27,7 +27,11 @@ public class TestController {
         log.info("should show traceId");
         helloRsp.setPrt("Hello World!");
         return helloRsp;
+    }
 
+    @GetMapping("/toData")
+    public String orderData() {
+        return "Hello World!";
     }
 
 
