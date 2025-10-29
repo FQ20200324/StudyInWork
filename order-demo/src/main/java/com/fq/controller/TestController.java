@@ -31,6 +31,12 @@ public class TestController {
 
     @GetMapping("/toData")
     public String orderData() {
+        try {
+            Thread.sleep(10*1000);
+        }catch (Exception e){
+            log.warn("sleep异常");
+        }
+
         return "Hello World!";
     }
 
