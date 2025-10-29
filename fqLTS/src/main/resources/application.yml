@@ -23,6 +23,18 @@ spring:
   config.import:
     - nacos:fqLTS.yml
 
+##  数据库相关
+datasource.mysql:
+  jdbc-url: *
+  username: *
+  password: *
+
+datasource.hive:
+  jdbc-url: *
+  username: *
+  password: *
+  maximum-pool-size: 20
+
 ##  Spring Boot Actuator
 management:
   endpoints:
