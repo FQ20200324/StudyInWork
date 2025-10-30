@@ -25,15 +25,18 @@ spring:
 
 ##  数据库相关
 datasource.mysql:
-  jdbc-url: *
-  username: *
-  password: *
+  jdbc-url: 'jdbc:mysql://localhost:3306/fq_test'
+  username: root
+  password: mysqlroot
 
-datasource.hive:
-  jdbc-url: *
-  username: *
-  password: *
-  maximum-pool-size: 20
+## redis
+redis:
+  default:
+    hostname: *
+    port: *
+    password: *
+    timeout: *
+    database: *
 
 ##  Spring Boot Actuator
 management:

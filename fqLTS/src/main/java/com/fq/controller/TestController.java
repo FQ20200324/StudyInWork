@@ -1,8 +1,7 @@
 package com.fq.controller;
 
-import com.fq.entity.UserOaidGoods;
 import com.fq.model.request.HelloReq;
-import com.fq.model.response.HelloRsp;
+import com.fq.model.response.HelloResp;
 import com.fq.service.TryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -33,19 +30,19 @@ public class TestController {
     TryService tryService;
 
     @PostMapping("/Hello")
-    public HelloRsp Hello(@RequestBody HelloReq request) {
+    public HelloResp Hello(@RequestBody HelloReq request) {
         if ("1".equals(request.getType())) {
-            HelloRsp helloRsp = new HelloRsp();
+            HelloResp helloRsp = new HelloResp();
             log.info("This should show traceId");
             helloRsp.setPrt("Hello World!");
             return helloRsp;
         }
-        return new HelloRsp();
+        return new HelloResp();
     }
 
     @GetMapping("/Test")
-    public HelloRsp TestH() {
-        HelloRsp helloRsp = new HelloRsp();
+    public HelloResp TestH() {
+        HelloResp helloRsp = new HelloResp();
         log.info("should show traceId");
         helloRsp.setPrt(STR."Hello World!\{flag} key=\{aaa}");
         return helloRsp;
@@ -88,12 +85,12 @@ public class TestController {
         return STR."拿到order: \{forObject} flag=\{flag} key=\{aaa}";
     }
 
-    @GetMapping("/sqlTest")
-    public UserOaidGoods getUser() {
-        List<String> ids = new ArrayList<>();
-        ids.add("58ae03b04f882970171e479efdd63c57".toUpperCase());
-        return tryService.getUser(ids);
-    }
+//    @GetMapping("/sqlTest")
+//    public UserOaidGoods getUser() {
+//        List<String> ids = new ArrayList<>();
+//        ids.add("58ae03b04f882970171e479efdd63c57".toUpperCase());
+//        return tryService.getUser(ids);
+//    }
 
 
 }

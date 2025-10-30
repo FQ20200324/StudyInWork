@@ -17,6 +17,7 @@ public class DataJdbcConfig {
 
     @Bean
     @Qualifier("mysql")
+    @Primary
     @ConfigurationProperties(prefix = "datasource.mysql")
     public HikariDataSource mysqlDataSource() {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
@@ -24,17 +25,17 @@ public class DataJdbcConfig {
 
     @Bean
     @Qualifier("mysql")
+    @Primary
     public NamedParameterJdbcTemplate mysqlNamedJdbcTemplate(@Qualifier("mysql") DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
-    @Bean
-    @Qualifier("hive")
-    @Primary
-    @ConfigurationProperties(prefix = "datasource.hive")
-    public HikariDataSource hiveDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
-    }
+//    @Bean
+//    @Qualifier("hive")
+//    @ConfigurationProperties(prefix = "datasource.hive")
+//    public HikariDataSource hiveDataSource() {
+//        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+//    }
 
 //    @Bean
 //    @Qualifier("mysql")
@@ -43,11 +44,11 @@ public class DataJdbcConfig {
 //        return new JdbcTemplate(dataSource);
 //    }
 
-    @Bean
-    @Qualifier("hive")
-    @Primary
-    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Qualifier("hive") DataSource dataSource) {
-        return new NamedParameterJdbcTemplate(dataSource);
-    }
+//    @Bean
+//    @Qualifier("hive")
+
+//    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Qualifier("hive") DataSource dataSource) {
+//        return new NamedParameterJdbcTemplate(dataSource);
+//    }
 
 }
