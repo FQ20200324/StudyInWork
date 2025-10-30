@@ -1,6 +1,8 @@
 package com.fq.constant;
 
+import lombok.experimental.UtilityClass;
 
-public interface Const {
-    String redisLockKey = "lr:fq:roleKey:";
+@UtilityClass
+public class Const {
+    public static final String redisLockKey = "lr:fq:roleKey:";
 }

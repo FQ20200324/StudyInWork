@@ -1,6 +1,5 @@
 package com.fq.config.redis;
 
-import com.fq.constant.Const;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +11,8 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import static com.fq.constant.Const.redisLockKey;
 
 /**
  * 如果需要更高级的可重入 推荐使用 redission
@@ -28,7 +29,7 @@ public class RedisLock {
     public void lock(String id) {
         // 防止误删
         String uuid    = UUID.randomUUID().toString();
-        String lockKey = Const.redisLockKey + id;
+        String lockKey = redisLockKey + id;
         // lua脚本
         String script = "if redis.call('get',KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
         // 加锁 true/false
