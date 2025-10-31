@@ -59,4 +59,37 @@ public class RedisLock {
             }
         }
     }
+
+
+//    /**
+//     * 使用 SET KEY VALUE EX TIMEOUT NX 命令上锁，成功返回true 否则返回 false
+//     */
+//    public boolean tryLock() {
+//        try {
+//            //SET KEY VALUE EX TIMEOUT NX
+//            return Objects.equals(redisTemplate.opsForValue().setIfAbsent(lockKey, requestId, expireTime, TimeUnit.SECONDS), Boolean.TRUE);
+//        } catch (Throwable e) {
+//            log.debug("[RedisLock] 获取 Redis 锁发生异常：{}", e.getLocalizedMessage(), e);
+//            return false;
+//        }
+//    }
+//
+//    /**
+//     * 使用redis lua 脚本 释放锁
+//     */
+//    public void unlock() {
+//        try {
+//            //判断是自己上的锁才解锁，否则不解锁
+//            String script = """
+//                        if redis.call('get',KEYS[1]) == ARGV[1] then
+//                            return redis.call('del',KEYS[1])
+//                        else
+//                            return 0
+//                        end
+//                        """;
+//            redisTemplate.execute(RedisScript.of(script, Integer.class), Collections.singletonList(lockKey), requestId);
+//        } catch (Throwable e) {
+//            log.debug("[RedisLock] 释放 Redis 锁发生异常：{}", e.getLocalizedMessage(), e);
+//        }
+//    }
 }
